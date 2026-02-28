@@ -28,10 +28,10 @@ const tree: TypeNode[] = [
       layout: "row",
       nodes: [
         { id: "child-1", render: ({ node }) => <div>{node.id}</div> },
-        { id: "child-2", render: ({ node }) => <div>{node.id}</div> }
-      ]
-    }
-  }
+        { id: "child-2", render: ({ node }) => <div>{node.id}</div> },
+      ],
+    },
+  },
 ];
 
 export function Demo() {
@@ -57,7 +57,7 @@ export function Demo() {
 
 ## GitHub Demo
 
-This repo includes a static demo at [`docs/index.html`](./docs/index.html).
+Live demo: [https://ii-elif-ii.github.io/ui-node-tree/](https://ii-elif-ii.github.io/ui-node-tree/)
 
 GitHub Pages deployment is handled by [`deploy-pages.yml`](./.github/workflows/deploy-pages.yml):
 
