@@ -11,16 +11,11 @@ const NodeTree = React.forwardRef<HTMLDivElement, NodeTreeProps>(
     {
       className,
       nodeTree,
-      align = "center",
-      direction = "down",
-      rootLayout = "stack",
-      paddingContainer = 128,
-      padding = 64,
-      gap = 64,
+      layout,
+      connection,
+      animation,
+      nodeFrame,
       debug = true,
-      strokeColor = "rgba(255,255,255)",
-      strokeWidth = 1,
-      animationSpeed = 2000,
       style,
       ...props
     },
@@ -40,53 +35,70 @@ const NodeTree = React.forwardRef<HTMLDivElement, NodeTreeProps>(
       [],
     );
 
+    const resolvedAlign = layout?.align ?? "center";
+    const resolvedDirection = layout?.direction ?? "down";
+    const resolvedRootLayout = layout?.root ?? "stack";
+    const resolvedPaddingContainer = layout?.containerPadding ?? 128;
+    const resolvedPadding = layout?.padding ?? 64;
+    const resolvedGap = layout?.gap ?? 64;
+    const resolvedStrokeColor = connection?.color ?? "rgba(255,255,255)";
+    const resolvedStrokeWidth = connection?.width ?? 1;
+    const resolvedAnimationDurationMs = animation?.durationMs ?? 2000;
+    const resolvedNodeFrameStyle = nodeFrame?.style;
+
     const { doneNodes, layoutState } = useNodeTreeLayout({
       nodeTree,
-      direction,
-      gap,
-      padding,
-      animationSpeed,
+      direction: resolvedDirection,
+      gap: resolvedGap,
+      padding: resolvedPadding,
+      animationSpeed: resolvedAnimationDurationMs,
       debug,
       containerRef,
       nodeRefs,
     });
 
-    const flowDown = direction === "down";
-    const alignValue = align ?? "center";
+    const flowDown = resolvedDirection === "down";
+    const alignValue = resolvedAlign;
     const alignX: AlignAxis =
       typeof alignValue === "string" ? alignValue : alignValue.x;
     const alignY: AlignAxis =
       typeof alignValue === "string" ? "start" : alignValue.y;
+    const resolvedConnectionOpacity = connection?.opacity ?? (debug ? 1 : 0.1);
 
     return (
       <div
         ref={ref}
-        className={cn("relative h-full min-h-0 w-full overflow-hidden", className)}
+        className={cn("unt-tree-root-container", className?.root)}
         style={style}
         {...props}
       >
         <div
           ref={containerRef}
-          className="relative"
-          style={{ padding: paddingContainer }}
+          className={cn("unt-tree-canvas", className?.canvas)}
+          style={{ padding: resolvedPaddingContainer }}
         >
           <TreeConnections
             layoutState={layoutState}
             debug={debug}
-            strokeColor={strokeColor}
-            strokeWidth={strokeWidth}
+            strokeColor={resolvedStrokeColor}
+            strokeWidth={resolvedStrokeWidth}
+            opacity={resolvedConnectionOpacity}
+            className={className?.connections}
           />
           <TreeRenderer
             nodeTree={nodeTree}
-            rootLayout={rootLayout}
+            rootLayout={resolvedRootLayout}
             flowDown={flowDown}
             alignX={alignX}
             alignY={alignY}
-            gap={gap}
+            gap={resolvedGap}
             debug={debug}
             layoutState={layoutState}
             doneNodes={doneNodes}
             registerNode={registerNode}
+            rendererClassName={className?.renderer}
+            nodeFrameClassName={className?.frame}
+            nodeFrameStyle={resolvedNodeFrameStyle}
           />
         </div>
       </div>

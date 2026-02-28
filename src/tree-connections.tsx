@@ -7,6 +7,8 @@ type TreeConnectionsProps = {
   debug: boolean;
   strokeColor: string;
   strokeWidth: number;
+  opacity: number;
+  className?: string;
 };
 
 export function TreeConnections({
@@ -14,6 +16,8 @@ export function TreeConnections({
   debug,
   strokeColor,
   strokeWidth,
+  opacity,
+  className,
 }: TreeConnectionsProps) {
   if (!layoutState.svgBounds) {
     return null;
@@ -21,16 +25,14 @@ export function TreeConnections({
 
   return (
     <svg
-      className={cn("pointer-events-none absolute inset-0 z-0", {
-        "opacity-100": debug,
-        "opacity-10": !debug,
-      })}
+      className={cn("unt-tree-connections", className)}
       width={layoutState.svgBounds.width}
       height={layoutState.svgBounds.height}
       viewBox={`0 0 ${layoutState.svgBounds.width} ${layoutState.svgBounds.height}`}
       style={{
         left: layoutState.svgBounds.offsetX,
         top: layoutState.svgBounds.offsetY,
+        opacity,
       }}
     >
       {layoutState.segments.map((segment) => {

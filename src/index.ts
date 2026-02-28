@@ -1,2 +1,14 @@
 export { NodeTree } from "./node-tree";
-export type { NodeFrameProps, NodeTreeProps, TypeNode, TypeNodeEdge } from "./types";
+export type {
+  NodeFrameProps,
+  NodeTreeAnimationOptions,
+  NodeTreeClassNameOptions,
+  NodeTreeConnectionOptions,
+  NodeTreeFrameOptions,
+  NodeTreeLayoutOptions,
+  NodeTreeProps,
+  TypeNodeChildren,
+  TypeNode,
+  TypeNodeEdge,
+  TypeNodeRenderContext,
+} from "./types";
