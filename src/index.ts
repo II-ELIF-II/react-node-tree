@@ -7,8 +7,8 @@ export type {
   NodeTreeFrameOptions,
   NodeTreeLayoutOptions,
   NodeTreeProps,
-  TypeNodeChildren,
-  TypeNode,
-  TypeNodeEdge,
-  TypeNodeRenderContext,
+  TreeNodeChildren,
+  TreeNode,
+  TreeNodeEdge,
+  TreeNodeRenderContext,
 } from "./types";

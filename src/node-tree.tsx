@@ -15,7 +15,7 @@ const NodeTree = React.forwardRef<HTMLDivElement, NodeTreeProps>(
       connection,
       animation,
       nodeFrame,
-      debug = true,
+      debug = false,
       style,
       ...props
     },

@@ -4,11 +4,11 @@ import type {
   AlignAxis,
   NodeFrameProps,
   NodeTreeLayoutState,
-  TypeNode,
+  TreeNode,
 } from "./types";
 
 type TreeRendererProps = {
-  nodeTree: TypeNode[];
+  nodeTree: TreeNode[];
   rootLayout: "stack" | "row";
   flowDown: boolean;
   alignX: AlignAxis;
@@ -76,7 +76,7 @@ function renderTreeNode({
   nodeFrameClassName,
   nodeFrameStyle,
 }: {
-  node: TypeNode;
+  node: TreeNode;
   index: number;
   parentId?: string;
   depth: number;

@@ -1,12 +1,12 @@
 import * as React from "react";
 import type {
   NodeTreeLayoutState,
-  TypeNode,
-  TypeNodeEdge,
+  TreeNode,
+  TreeNodeEdge,
 } from "./types";
 
 type EdgeGeometry = {
-  edge: TypeNodeEdge;
+  edge: TreeNodeEdge;
   fromX: number;
   fromY: number;
   fromBottom: number;
@@ -18,7 +18,7 @@ type EdgeGeometry = {
 };
 
 type UseNodeTreeLayoutParams = {
-  nodeTree: TypeNode[];
+  nodeTree: TreeNode[];
   direction: "down" | "right";
   gap: number;
   padding: number;
@@ -36,10 +36,10 @@ const EMPTY_LAYOUT: NodeTreeLayoutState = {
   svgBounds: null,
 };
 
-function collectEdges(nodes: TypeNode[]) {
-  const edges: TypeNodeEdge[] = [];
+function collectEdges(nodes: TreeNode[]) {
+  const edges: TreeNodeEdge[] = [];
   const visiting = new Set<string>();
-  const visit = (node: TypeNode) => {
+  const visit = (node: TreeNode) => {
     if (visiting.has(node.id)) {
       return;
     }
@@ -64,10 +64,10 @@ function collectEdges(nodes: TypeNode[]) {
   return edges;
 }
 
-function collectDescendants(nodes: TypeNode[]) {
+function collectDescendants(nodes: TreeNode[]) {
   const map = new Map<string, string[]>();
   const visiting = new Set<string>();
-  const visit = (node: TypeNode): string[] => {
+  const visit = (node: TreeNode): string[] => {
     if (visiting.has(node.id)) {
       return [];
     }
@@ -202,7 +202,7 @@ export function useNodeTreeLayout({
       return duration;
     };
 
-    const visit = (node: TypeNode, depth: number, nodeDelay: number) => {
+    const visit = (node: TreeNode, depth: number, nodeDelay: number) => {
       const existing = nextNodeDelays.get(node.id) ?? 0;
       const resolvedDelay = Math.max(existing, nodeDelay);
       nextNodeDelays.set(node.id, resolvedDelay);

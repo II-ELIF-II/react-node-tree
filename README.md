@@ -1,11 +1,12 @@
-# @ii-elif-ii/ui-node-tree
+# @ii_elif_ii/ui-node-tree
 
 Animated React node-tree component with configurable layouts and SVG connection lines.
+Built primarily for my personal use.
 
 ## Install
 
 ```bash
-npm install @ii-elif-ii/ui-node-tree
+npm install @ii_elif_ii/ui-node-tree
 ```
 
 Peer dependencies (install in consuming app if needed):
@@ -17,10 +18,10 @@ Peer dependencies (install in consuming app if needed):
 
 ```tsx
 import * as React from "react";
-import { NodeTree, type TypeNode } from "@ii-elif-ii/ui-node-tree";
-import "@ii-elif-ii/ui-node-tree/styles.css";
+import { NodeTree, type TreeNode } from "@ii_elif_ii/ui-node-tree";
+import "@ii_elif_ii/ui-node-tree/styles.css";
 
-const tree: TypeNode[] = [
+const tree: TreeNode[] = [
   {
     id: "root",
     render: ({ node }) => <div className="rounded border p-3">{node.id}</div>,
@@ -52,22 +53,10 @@ export function Demo() {
 ## API
 
 - `NodeTree`
-- `TypeNode`
+- `TreeNode`
 - `NodeTreeProps`
 
-## GitHub Demo
-
-Live demo: [https://ii-elif-ii.github.io/ui-node-tree/](https://ii-elif-ii.github.io/ui-node-tree/)
-
-GitHub Pages deployment is handled by [`deploy-pages.yml`](./.github/workflows/deploy-pages.yml):
-
-1. Push to `main` (or run the workflow manually).
-2. The workflow runs `npm ci` and `npm run build`.
-3. It publishes `docs/` plus built `dist/` assets to GitHub Pages.
-
-After first deployment, set repository Pages source to **GitHub Actions** in repo settings.
-
-## Publish (Private npm)
+## Publish (Public npm)
 
 1. Authenticate to npm:
 
@@ -81,7 +70,7 @@ npm login
 npm run build
 ```
 
-3. Publish as private scoped package:
+3. Publish:
 
 ```bash
 npm publish
@@ -89,5 +78,5 @@ npm publish
 
 This package is configured with:
 
-- `publishConfig.access = "restricted"`
-- scoped name `@ii-elif-ii/ui-node-tree`
+- `publishConfig.access = "public"`
+- scoped name `@ii_elif_ii/ui-node-tree`

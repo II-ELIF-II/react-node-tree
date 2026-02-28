@@ -4,9 +4,9 @@ import type * as React from "react";
  * Runtime info provided to each node render function.
  * This enables render logic based on position, hierarchy, and animation state.
  */
-export interface TypeNodeRenderContext<TData = unknown> {
+export interface TreeNodeRenderContext<TData = unknown> {
   /** The current node being rendered. */
-  node: TypeNode<TData>;
+  node: TreeNode<TData>;
   /** Index of this node within its current siblings array. */
   index: number;
   /** Depth from root (root = 0). */
@@ -23,25 +23,25 @@ export interface TypeNodeRenderContext<TData = unknown> {
   isNodeAnimationDone: boolean;
 }
 
-export interface TypeNodeChildren<TData = unknown> {
+export interface TreeNodeChildren<TData = unknown> {
   /** Layout for the child group. */
   layout?: "stack" | "row";
   /** Child nodes under this node. */
-  nodes: TypeNode<TData>[];
+  nodes: TreeNode<TData>[];
 }
 
-export type TypeNode<TData = unknown> = {
+export type TreeNode<TData = unknown> = {
   /** Unique node identifier. */
   id: string;
   /** Optional payload for consumer-defined node data. */
   data?: TData;
   /** Render callback for this node. */
-  render: (context: TypeNodeRenderContext<TData>) => React.ReactNode;
+  render: (context: TreeNodeRenderContext<TData>) => React.ReactNode;
   /** Optional child group. */
-  children?: TypeNodeChildren<TData>;
+  children?: TreeNodeChildren<TData>;
 };
 
-export type TypeNodeEdge = {
+export type TreeNodeEdge = {
   key: string;
   from: string;
   to: string;
@@ -102,10 +102,12 @@ export interface NodeTreeFrameOptions {
   style?: React.CSSProperties;
 }
 
-export interface NodeTreeProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className"> {
+export interface NodeTreeProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className"
+> {
   /** Root nodes to render. */
-  nodeTree: TypeNode[];
+  nodeTree: TreeNode[];
   /** Slot-based class names for internal elements. */
   className?: NodeTreeClassNameOptions;
   /** Grouped layout options. */
@@ -116,13 +118,13 @@ export interface NodeTreeProps
   animation?: NodeTreeAnimationOptions;
   /** Grouped node frame options. */
   nodeFrame?: NodeTreeFrameOptions;
-  /** Show debug overlay badges. @default true */
+  /** Show debug overlay badges. @default false */
   debug?: boolean;
 }
 
 export interface NodeFrameProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Node associated with this frame element. */
-  node: TypeNode;
+  node: TreeNode;
   /** Ref registry hook used internally for layout measurements. */
   onRef: (id: string, element: HTMLDivElement | null) => void;
   children: React.ReactNode;
