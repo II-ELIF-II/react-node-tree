@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Animated React node tree component with configurable layouts and connection lines.",
   "author": "II-ELIF-II",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/II-ELIF-II/ui-node-tree.git"
