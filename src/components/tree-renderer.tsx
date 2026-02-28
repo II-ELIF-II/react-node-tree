@@ -1,11 +1,11 @@
 import * as React from "react";
-import { cn } from "./utils/cn";
+import { cn } from "../utils/cn";
 import type {
   AlignAxis,
   NodeFrameProps,
   NodeTreeLayoutState,
   TreeNode,
-} from "./types";
+} from "../types";
 
 type TreeRendererProps = {
   nodeTree: TreeNode[];

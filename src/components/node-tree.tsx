@@ -1,10 +1,10 @@
 import * as React from "react";
-import "./node-tree.css";
-import { cn } from "./utils/cn";
+import "../node-tree.css";
+import { cn } from "../utils/cn";
 import { TreeConnections } from "./tree-connections";
 import { TreeRenderer } from "./tree-renderer";
-import { useNodeTreeLayout } from "./use-node-tree-layout";
-import type { AlignAxis, NodeTreeProps } from "./types";
+import { useNodeTreeLayout } from "../hooks/use-node-tree-layout";
+import type { AlignAxis, NodeTreeProps } from "../types";
 
 const NodeTree = React.forwardRef<HTMLDivElement, NodeTreeProps>(
   (

@@ -1,4 +1,4 @@
-export { NodeTree } from "./node-tree";
+export { NodeTree } from "./components/node-tree";
 export type {
   NodeFrameProps,
   NodeTreeAnimationOptions,

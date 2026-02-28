@@ -1,6 +1,6 @@
 import * as React from "react";
-import { cn } from "./utils/cn";
-import type { NodeTreeLayoutState } from "./types";
+import { cn } from "../utils/cn";
+import type { NodeTreeLayoutState } from "../types";
 
 type TreeConnectionsProps = {
   layoutState: NodeTreeLayoutState;

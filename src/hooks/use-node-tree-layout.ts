@@ -3,7 +3,7 @@ import type {
   NodeTreeLayoutState,
   TreeNode,
   TreeNodeEdge,
-} from "./types";
+} from "../types";
 
 type EdgeGeometry = {
   edge: TreeNodeEdge;
