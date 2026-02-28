@@ -18,7 +18,30 @@ type TreeRendererProps = {
   layoutState: NodeTreeLayoutState;
   doneNodes: Set<string>;
   registerNode: (id: string, element: HTMLDivElement | null) => void;
+  rendererClassName?: string;
+  nodeFrameClassName?: string;
+  nodeFrameStyle?: React.CSSProperties;
 };
+
+function axisToFlexAlign(axis: AlignAxis): React.CSSProperties["alignItems"] {
+  if (axis === "start") {
+    return "flex-start";
+  }
+  if (axis === "end") {
+    return "flex-end";
+  }
+  return "center";
+}
+
+function axisToFlexJustify(axis: AlignAxis): React.CSSProperties["justifyContent"] {
+  if (axis === "start") {
+    return "flex-start";
+  }
+  if (axis === "end") {
+    return "flex-end";
+  }
+  return "center";
+}
 
 function NodeFrame({ node, className, onRef, children, ...props }: NodeFrameProps) {
   return (
@@ -26,7 +49,7 @@ function NodeFrame({ node, className, onRef, children, ...props }: NodeFrameProp
       ref={(element) => {
         onRef(node.id, element);
       }}
-      className={cn("cursor-auto", className)}
+      className={cn("unt-tree-node-hit", className)}
       data-nodeframe
       data-viewport-no-pan
       {...props}
@@ -50,6 +73,8 @@ function renderTreeNode({
   layoutState,
   doneNodes,
   registerNode,
+  nodeFrameClassName,
+  nodeFrameStyle,
 }: {
   node: TypeNode;
   index: number;
@@ -64,6 +89,8 @@ function renderTreeNode({
   layoutState: NodeTreeLayoutState;
   doneNodes: Set<string>;
   registerNode: (id: string, element: HTMLDivElement | null) => void;
+  nodeFrameClassName?: string;
+  nodeFrameStyle?: React.CSSProperties;
 }): React.ReactNode {
   const stackUnder = !flowDown && node.children?.layout === "stack";
   if (path.has(node.id)) {
@@ -71,45 +98,20 @@ function renderTreeNode({
   }
 
   path.add(node.id);
+  const childrenLayoutIsStack = node.children?.layout === "stack" || !flowDown;
+  const childCount = node.children?.nodes.length ?? 0;
+  const isLeaf = childCount === 0;
+  const pathIds = [...path];
   const childrenContent =
     node.children?.nodes && node.children.nodes.length > 0 ? (
       <div
-        className={cn(
-          "flex shrink-0",
-          {
-            "flex-col": node.children?.layout === "stack" || !flowDown,
-            "flex-row": node.children?.layout !== "stack" && flowDown,
-          },
-          {
-            "items-start":
-              (node.children?.layout === "stack" || !flowDown
-                ? alignX
-                : alignY) === "start",
-            "items-center":
-              (node.children?.layout === "stack" || !flowDown
-                ? alignX
-                : alignY) === "center",
-            "items-end":
-              (node.children?.layout === "stack" || !flowDown
-                ? alignX
-                : alignY) === "end",
-          },
-          {
-            "justify-start":
-              (node.children?.layout === "stack" || !flowDown
-                ? alignY
-                : alignX) === "start",
-            "justify-center":
-              (node.children?.layout === "stack" || !flowDown
-                ? alignY
-                : alignX) === "center",
-            "justify-end":
-              (node.children?.layout === "stack" || !flowDown
-                ? alignY
-                : alignX) === "end",
-          },
-        )}
+        className="unt-tree-children"
         style={{
+          display: "flex",
+          flexShrink: 0,
+          flexDirection: childrenLayoutIsStack ? "column" : "row",
+          alignItems: axisToFlexAlign(childrenLayoutIsStack ? alignX : alignY),
+          justifyContent: axisToFlexJustify(childrenLayoutIsStack ? alignY : alignX),
           gap,
           marginTop: flowDown || stackUnder ? gap : 0,
           marginLeft: flowDown
@@ -136,6 +138,8 @@ function renderTreeNode({
             layoutState,
             doneNodes,
             registerNode,
+            nodeFrameClassName,
+            nodeFrameStyle,
           }),
         )}
       </div>
@@ -145,49 +149,34 @@ function renderTreeNode({
   return (
     <div
       key={`${node.id}-${index}`}
-      className={cn(
-        "relative flex",
-        {
-          "flex-col": flowDown || stackUnder,
-          "flex-row": !flowDown && !stackUnder,
-        },
-        {
-          "items-start": (flowDown ? alignX : alignY) === "start",
-          "items-center": (flowDown ? alignX : alignY) === "center",
-          "items-end": (flowDown ? alignX : alignY) === "end",
-        },
-        {
-          "justify-start": (flowDown ? alignY : alignX) === "start",
-          "justify-center": (flowDown ? alignY : alignX) === "center",
-          "justify-end": (flowDown ? alignY : alignX) === "end",
-        },
-      )}
+      className="unt-tree-node-wrap"
+      style={{
+        display: "flex",
+        position: "relative",
+        flexDirection: flowDown || stackUnder ? "column" : "row",
+        alignItems: axisToFlexAlign(flowDown ? alignX : alignY),
+        justifyContent: axisToFlexJustify(flowDown ? alignY : alignX),
+      }}
     >
       <NodeFrame
         node={node}
-        className={cn("node-enter relative flex border border-white/20 p-4", {
-          "justify-start": alignX === "start",
-          "justify-center": alignX === "center",
-          "justify-end": alignX === "end",
-        })}
+        className={cn("node-enter unt-tree-node-frame", nodeFrameClassName)}
         style={{
+          justifyContent: axisToFlexJustify(alignX),
           animationDuration: `${layoutState.nodeAnimDuration}s`,
           animationDelay: `${
             layoutState.nodeDelays.get(node.id) ?? depth * 0.08 + index * 0.04
           }s`,
+          ...nodeFrameStyle,
         }}
         onRef={registerNode}
       >
         {debug ? (
           <div
-            className={cn("absolute top-2 left-2 z-10 px-2 py-1 text-xs", {
-              "bg-emerald-200 text-emerald-950": depth % 6 === 0,
-              "bg-sky-200 text-sky-950": depth % 6 === 1,
-              "bg-amber-200 text-amber-950": depth % 6 === 2,
-              "bg-rose-200 text-rose-950": depth % 6 === 3,
-              "bg-lime-200 text-lime-950": depth % 6 === 4,
-              "bg-violet-200 text-violet-950": depth % 6 === 5,
-            })}
+            className={cn(
+              "unt-tree-debug-badge",
+              `unt-tree-debug-badge--${depth % 6}`,
+            )}
           >
             <div>{`DEPTH: ${depth}`}</div>
             <div>{`PARENT-ID: ${parentId ?? "root"}`}</div>
@@ -195,7 +184,16 @@ function renderTreeNode({
             <div>{`C-LAYOUT: ${node.children?.layout ?? "N/A"}`}</div>
           </div>
         ) : null}
-        {node.renderNode(node, index, depth, doneNodes.has(node.id))}
+        {node.render({
+          node,
+          index,
+          depth,
+          parentId,
+          path: pathIds,
+          isLeaf,
+          childCount,
+          isNodeAnimationDone: doneNodes.has(node.id),
+        })}
       </NodeFrame>
 
       {childrenContent}
@@ -214,34 +212,25 @@ export function TreeRenderer({
   layoutState,
   doneNodes,
   registerNode,
+  rendererClassName,
+  nodeFrameClassName,
+  nodeFrameStyle,
 }: TreeRendererProps) {
+  const rootLayoutRow = rootLayout === "row";
   return (
     <section
-      className={cn(
-        "relative z-10 flex w-full overflow-visible",
-        {
-          "flex-row": rootLayout === "row",
-          "flex-col": rootLayout !== "row",
-        },
-        rootLayout === "row"
-          ? {
-              "items-start": alignY === "start",
-              "items-center": alignY === "center",
-              "items-end": alignY === "end",
-              "justify-start": alignX === "start",
-              "justify-center": alignX === "center",
-              "justify-end": alignX === "end",
-            }
-          : {
-              "items-start": alignX === "start",
-              "items-center": alignX === "center",
-              "items-end": alignX === "end",
-              "justify-start": alignY === "start",
-              "justify-center": alignY === "center",
-              "justify-end": alignY === "end",
-            },
-      )}
-      style={{ gap }}
+      className={cn("unt-tree-renderer", rendererClassName)}
+      style={{
+        gap,
+        display: "flex",
+        width: "100%",
+        overflow: "visible",
+        position: "relative",
+        zIndex: 10,
+        flexDirection: rootLayoutRow ? "row" : "column",
+        alignItems: axisToFlexAlign(rootLayoutRow ? alignY : alignX),
+        justifyContent: axisToFlexJustify(rootLayoutRow ? alignX : alignY),
+      }}
     >
       {nodeTree.map((node, index) =>
         renderTreeNode({
@@ -257,6 +246,8 @@ export function TreeRenderer({
           layoutState,
           doneNodes,
           registerNode,
+          nodeFrameClassName,
+          nodeFrameStyle,
         }),
       )}
     </section>

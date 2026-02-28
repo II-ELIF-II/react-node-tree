@@ -23,19 +23,29 @@ import "@ii-elif-ii/ui-node-tree/styles.css";
 const tree: TypeNode[] = [
   {
     id: "root",
-    renderNode: (node) => <div className="rounded border p-3">{node.id}</div>,
+    render: ({ node }) => <div className="rounded border p-3">{node.id}</div>,
     children: {
       layout: "row",
       nodes: [
-        { id: "child-1", renderNode: (node) => <div>{node.id}</div> },
-        { id: "child-2", renderNode: (node) => <div>{node.id}</div> }
+        { id: "child-1", render: ({ node }) => <div>{node.id}</div> },
+        { id: "child-2", render: ({ node }) => <div>{node.id}</div> }
       ]
     }
   }
 ];
 
 export function Demo() {
-  return <NodeTree nodeTree={tree} debug={false} />;
+  return (
+    <NodeTree
+      nodeTree={tree}
+      debug={false}
+      className={{ frame: "my-node-frame" }}
+      layout={{ direction: "down", root: "stack", gap: 64 }}
+      connection={{ color: "rgba(255,255,255)", width: 1, opacity: 0.15 }}
+      animation={{ durationMs: 2000 }}
+      nodeFrame={{ style: { borderRadius: 12 } }}
+    />
+  );
 }
 ```
 
@@ -44,6 +54,18 @@ export function Demo() {
 - `NodeTree`
 - `TypeNode`
 - `NodeTreeProps`
+
+## GitHub Demo
+
+This repo includes a static demo at [`docs/index.html`](./docs/index.html).
+
+GitHub Pages deployment is handled by [`deploy-pages.yml`](./.github/workflows/deploy-pages.yml):
+
+1. Push to `main` (or run the workflow manually).
+2. The workflow runs `npm ci` and `npm run build`.
+3. It publishes `docs/` plus built `dist/` assets to GitHub Pages.
+
+After first deployment, set repository Pages source to **GitHub Actions** in repo settings.
 
 ## Publish (Private npm)
 

@@ -7,13 +7,83 @@
   }
 }
 
+.unt-tree-root-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.unt-tree-canvas {
+  position: relative;
+}
+
+.unt-tree-node-hit {
+  cursor: auto;
+}
+
+.unt-tree-node-frame {
+  position: relative;
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+}
+
+.unt-tree-debug-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.unt-tree-debug-badge--0 {
+  background: #a7f3d0;
+  color: #042f2e;
+}
+
+.unt-tree-debug-badge--1 {
+  background: #bae6fd;
+  color: #082f49;
+}
+
+.unt-tree-debug-badge--2 {
+  background: #fde68a;
+  color: #451a03;
+}
+
+.unt-tree-debug-badge--3 {
+  background: #fecdd3;
+  color: #4c0519;
+}
+
+.unt-tree-debug-badge--4 {
+  background: #d9f99d;
+  color: #1a2e05;
+}
+
+.unt-tree-debug-badge--5 {
+  background: #ddd6fe;
+  color: #2e1065;
+}
+
+.unt-tree-connections {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
 .node-enter {
   animation-name: node-enter;
   animation-timing-function: ease-out;
   animation-fill-mode: both;
 }
 
-@keyframes line-draw {
+@keyframes unt-line-draw {
   0% {
     opacity: 0.2;
   }
@@ -24,7 +94,7 @@
 }
 
 .node-line {
-  animation-name: line-draw;
+  animation-name: unt-line-draw;
   animation-timing-function: ease-out;
   animation-fill-mode: both;
 }
