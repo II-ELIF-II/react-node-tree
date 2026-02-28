@@ -1,0 +1,60 @@
+{
+  "name": "@ii-elif-ii/ui-node-tree",
+  "version": "1.0.0",
+  "description": "Animated React node tree component with configurable layouts and connection lines.",
+  "author": "II-ELIF-II",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/II-ELIF-II/ui-node-tree.git"
+  },
+  "homepage": "https://github.com/II-ELIF-II/ui-node-tree#readme",
+  "bugs": {
+    "url": "https://github.com/II-ELIF-II/ui-node-tree/issues"
+  },
+  "keywords": [
+    "react",
+    "tree",
+    "node",
+    "ui",
+    "tailwindcss"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsup",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.6",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
