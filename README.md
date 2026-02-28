@@ -52,31 +52,72 @@ export function Demo() {
 
 ## API
 
-- `NodeTree`
+### `NodeTree`
+
+Main React component that renders the tree and animated SVG connections.
+
+### `TreeNode`
+
+Node model for `nodeTree`.
+
+```ts
+type TreeNode<TData = unknown> = {
+  id: string;
+  data?: TData;
+  render: (context: TreeNodeRenderContext<TData>) => React.ReactNode;
+  children?: {
+    layout?: "stack" | "row";
+    nodes: TreeNode<TData>[];
+  };
+};
+```
+
+### `TreeNodeRenderContext`
+
+Render callback context:
+
+- `node`: current `TreeNode`
+- `index`: sibling index
+- `depth`: depth from root (`0` for root)
+- `parentId`: parent node id (undefined for root)
+- `path`: ancestor path ending with current node id
+- `isLeaf`: whether node has no children
+- `childCount`: direct children count
+- `isNodeAnimationDone`: whether node enter animation has finished
+
+### `NodeTreeProps`
+
+Props for `NodeTree`:
+
+- `nodeTree: TreeNode[]` root nodes to render
+- `className?: NodeTreeClassNameOptions` slot classes (`root`, `canvas`, `renderer`, `frame`, `connections`)
+- `layout?: NodeTreeLayoutOptions` layout config
+  - `align?: "center" | "start" | "end" | { x, y }`
+  - `direction?: "down" | "right"`
+  - `root?: "stack" | "row"`
+  - `gap?: number`
+  - `padding?: number`
+  - `containerPadding?: number`
+- `connection?: NodeTreeConnectionOptions`
+  - `color?: string`
+  - `width?: number`
+  - `opacity?: number`
+- `animation?: NodeTreeAnimationOptions`
+  - `durationMs?: number`
+- `nodeFrame?: NodeTreeFrameOptions`
+  - `style?: React.CSSProperties`
+- `debug?: boolean`
+
+### Exported Types
+
 - `TreeNode`
+- `TreeNodeChildren`
+- `TreeNodeRenderContext`
+- `TreeNodeEdge`
 - `NodeTreeProps`
-
-## Publish (Public npm)
-
-1. Authenticate to npm:
-
-```bash
-npm login
-```
-
-2. Build:
-
-```bash
-npm run build
-```
-
-3. Publish:
-
-```bash
-npm publish
-```
-
-This package is configured with:
-
-- `publishConfig.access = "public"`
-- scoped name `@ii_elif_ii/ui-node-tree`
+- `NodeTreeLayoutOptions`
+- `NodeTreeConnectionOptions`
+- `NodeTreeAnimationOptions`
+- `NodeTreeClassNameOptions`
+- `NodeTreeFrameOptions`
+- `NodeFrameProps`
