@@ -33,7 +33,9 @@ function axisToFlexAlign(axis: AlignAxis): React.CSSProperties["alignItems"] {
   return "center";
 }
 
-function axisToFlexJustify(axis: AlignAxis): React.CSSProperties["justifyContent"] {
+function axisToFlexJustify(
+  axis: AlignAxis,
+): React.CSSProperties["justifyContent"] {
   if (axis === "start") {
     return "flex-start";
   }
@@ -43,7 +45,13 @@ function axisToFlexJustify(axis: AlignAxis): React.CSSProperties["justifyContent
   return "center";
 }
 
-function NodeFrame({ node, className, onRef, children, ...props }: NodeFrameProps) {
+function NodeFrame({
+  node,
+  className,
+  onRef,
+  children,
+  ...props
+}: NodeFrameProps) {
   return (
     <div
       ref={(element) => {
@@ -111,7 +119,9 @@ function renderTreeNode({
           flexShrink: 0,
           flexDirection: childrenLayoutIsStack ? "column" : "row",
           alignItems: axisToFlexAlign(childrenLayoutIsStack ? alignX : alignY),
-          justifyContent: axisToFlexJustify(childrenLayoutIsStack ? alignY : alignX),
+          justifyContent: axisToFlexJustify(
+            childrenLayoutIsStack ? alignY : alignX,
+          ),
           gap,
           marginTop: flowDown || stackUnder ? gap : 0,
           marginLeft: flowDown
@@ -160,7 +170,7 @@ function renderTreeNode({
     >
       <NodeFrame
         node={node}
-        className={cn("node-enter unt-tree-node-frame", nodeFrameClassName)}
+        className={cn("unt-node-enter unt-tree-node-frame", nodeFrameClassName)}
         style={{
           justifyContent: axisToFlexJustify(alignX),
           animationDuration: `${layoutState.nodeAnimDuration}s`,

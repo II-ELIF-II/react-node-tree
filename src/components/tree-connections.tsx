@@ -54,7 +54,7 @@ export function TreeConnections({
             y1={segment.y1 - layoutState.svgBounds!.offsetY}
             x2={segment.x2 - layoutState.svgBounds!.offsetX}
             y2={segment.y2 - layoutState.svgBounds!.offsetY}
-            className="node-line"
+            className="unt-node-line"
             style={{
               strokeDasharray: segment.length,
               strokeDashoffset: segment.length,
