@@ -18,6 +18,7 @@ Peer dependencies (install in consuming app if needed):
 ```tsx
 import * as React from "react";
 import { NodeTree, type TypeNode } from "@ii-elif-ii/ui-node-tree";
+import "@ii-elif-ii/ui-node-tree/styles.css";
 
 const tree: TypeNode[] = [
   {

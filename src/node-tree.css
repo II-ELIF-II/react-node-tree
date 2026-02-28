@@ -1,0 +1,30 @@
+@keyframes node-enter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.node-enter {
+  animation-name: node-enter;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes line-draw {
+  0% {
+    opacity: 0.2;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.node-line {
+  animation-name: line-draw;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
