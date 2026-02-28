@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ui-node-tree Demo</title>
     <link rel="stylesheet" href="./demo.css" />
-    <link rel="stylesheet" href="./dist/node-tree.css" />
+    <script>
+      const repoBase = window.location.pathname.startsWith("/ui-node-tree/") ? "/ui-node-tree" : "";
+      const libStyle = document.createElement("link");
+      libStyle.rel = "stylesheet";
+      libStyle.href = `${repoBase}/dist/node-tree.css`;
+      document.head.appendChild(libStyle);
+    </script>
   </head>
   <body>
     <div class="page">

@@ -1,6 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { NodeTree } from "./dist/index.js";
+
+const repoBase = window.location.pathname.startsWith("/ui-node-tree/") ? "/ui-node-tree" : "";
+const { NodeTree } = await import(`${repoBase}/dist/index.js`);
 
 const e = React.createElement;
 
