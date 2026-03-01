@@ -1,6 +1,6 @@
 {
   "name": "@ii_elif_ii/ui-node-tree",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Animated React node tree component with configurable layouts and connection lines.",
   "author": "II-ELIF-II",
   "license": "MIT",

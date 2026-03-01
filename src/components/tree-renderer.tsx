@@ -72,6 +72,7 @@ function renderTreeNode({
   index,
   parentId,
   depth,
+  siblingCount,
   path,
   flowDown,
   alignX,
@@ -88,6 +89,7 @@ function renderTreeNode({
   index: number;
   parentId?: string;
   depth: number;
+  siblingCount: number;
   path: Set<string>;
   flowDown: boolean;
   alignX: AlignAxis;
@@ -107,12 +109,14 @@ function renderTreeNode({
 
   path.add(node.id);
   const childrenLayoutIsStack = node.children?.layout === "stack" || !flowDown;
+  const childNodes = node.children?.nodes ?? [];
   const childCount = node.children?.nodes.length ?? 0;
   const isLeaf = childCount === 0;
   const pathIds = [...path];
   const childrenContent =
-    node.children?.nodes && node.children.nodes.length > 0 ? (
+    childNodes.length > 0 ? (
       <div
+        role="group"
         className="unt-tree-children"
         style={{
           display: "flex",
@@ -133,12 +137,13 @@ function renderTreeNode({
               : gap,
         }}
       >
-        {node.children.nodes.map((child, childIndex) =>
+        {childNodes.map((child, childIndex) =>
           renderTreeNode({
             node: child,
             index: childIndex,
             parentId: node.id,
             depth: depth + 1,
+            siblingCount: childNodes.length,
             path,
             flowDown,
             alignX,
@@ -159,6 +164,11 @@ function renderTreeNode({
   return (
     <div
       key={`${node.id}-${index}`}
+      role="treeitem"
+      aria-level={depth + 1}
+      aria-posinset={index + 1}
+      aria-setsize={siblingCount}
+      aria-expanded={childCount > 0 ? true : undefined}
       className="unt-tree-node-wrap"
       style={{
         display: "flex",
@@ -183,6 +193,7 @@ function renderTreeNode({
       >
         {debug ? (
           <div
+            aria-hidden="true"
             className={cn(
               "unt-tree-debug-badge",
               `unt-tree-debug-badge--${depth % 6}`,
@@ -228,8 +239,10 @@ export function TreeRenderer({
 }: TreeRendererProps) {
   const rootLayoutRow = rootLayout === "row";
   return (
-    <section
+    <div
       className={cn("unt-tree-renderer", rendererClassName)}
+      role="tree"
+      aria-label="Node tree"
       style={{
         gap,
         display: "flex",
@@ -247,6 +260,7 @@ export function TreeRenderer({
           node,
           index,
           depth: 0,
+          siblingCount: nodeTree.length,
           path: new Set<string>(),
           flowDown,
           alignX,
@@ -260,6 +274,6 @@ export function TreeRenderer({
           nodeFrameStyle,
         }),
       )}
-    </section>
+    </div>
   );
 }

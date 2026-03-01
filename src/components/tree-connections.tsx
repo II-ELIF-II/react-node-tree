@@ -26,6 +26,9 @@ export function TreeConnections({
   return (
     <svg
       className={cn("unt-tree-connections", className)}
+      aria-hidden="true"
+      focusable="false"
+      role="presentation"
       width={layoutState.svgBounds.width}
       height={layoutState.svgBounds.height}
       viewBox={`0 0 ${layoutState.svgBounds.width} ${layoutState.svgBounds.height}`}

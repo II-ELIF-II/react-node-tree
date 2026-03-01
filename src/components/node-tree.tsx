@@ -63,7 +63,7 @@ const NodeTree = React.forwardRef<HTMLDivElement, NodeTreeProps>(
       typeof alignValue === "string" ? alignValue : alignValue.x;
     const alignY: AlignAxis =
       typeof alignValue === "string" ? "start" : alignValue.y;
-    const resolvedConnectionOpacity = connection?.opacity ?? (debug ? 1 : 0.1);
+    const resolvedConnectionOpacity = connection?.opacity ?? (debug ? 1 : 0.25);
 
     return (
       <div
