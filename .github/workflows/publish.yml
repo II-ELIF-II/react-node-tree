@@ -36,6 +36,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Use Latest npm
+        run: |
+          npm i -g npm@latest
+          npm -v
+
+      - name: Clear Token-Based npm Auth
+        run: |
+          rm -f ~/.npmrc
+          npm config delete //registry.npmjs.org/:_authToken || true
+          npm config delete _authToken || true
+
       - name: Check If Version Already Published
         id: version_check
         run: |
