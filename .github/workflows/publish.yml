@@ -27,6 +27,7 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
           scope: "@ii_elif_ii"
+          always-auth: true
 
       - name: Install
         run: npm ci
