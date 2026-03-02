@@ -1,16 +1,16 @@
 {
-  "name": "@ii_elif_ii/ui-node-tree",
-  "version": "1.0.6",
+  "name": "@ii_elif_ii/react-node-tree",
+  "version": "1.0.7",
   "description": "Animated React node tree component with configurable layouts and connection lines.",
   "author": "II-ELIF-II",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/II-ELIF-II/ui-node-tree.git"
+    "url": "git+https://github.com/II-ELIF-II/react-node-tree.git"
   },
-  "homepage": "https://github.com/II-ELIF-II/ui-node-tree#readme",
+  "homepage": "https://github.com/II-ELIF-II/react-node-tree#readme",
   "bugs": {
-    "url": "https://github.com/II-ELIF-II/ui-node-tree/issues"
+    "url": "https://github.com/II-ELIF-II/react-node-tree/issues"
   },
   "keywords": [
     "react",

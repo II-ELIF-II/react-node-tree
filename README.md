@@ -1,4 +1,4 @@
-# @ii_elif_ii/ui-node-tree
+# @ii_elif_ii/react-node-tree
 
 Animated React node-tree component with configurable layouts and SVG connection lines.
 Built primarily for my personal use.
@@ -6,7 +6,7 @@ Built primarily for my personal use.
 ## Install
 
 ```bash
-npm install @ii_elif_ii/ui-node-tree
+npm install @ii_elif_ii/react-node-tree
 ```
 
 Peer dependencies (install in consuming app if needed):
@@ -18,8 +18,8 @@ Peer dependencies (install in consuming app if needed):
 
 ```tsx
 import * as React from "react";
-import { NodeTree, type TreeNode } from "@ii_elif_ii/ui-node-tree";
-import "@ii_elif_ii/ui-node-tree/styles.css";
+import { NodeTree, type TreeNode } from "@ii_elif_ii/react-node-tree";
+import "@ii_elif_ii/react-node-tree/styles.css";
 
 const tree: TreeNode[] = [
   {
