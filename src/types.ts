@@ -75,7 +75,7 @@ export interface NodeTreeConnectionOptions {
   color?: string;
   /** Line stroke width in px. @default 1 */
   width?: number;
-  /** Line opacity (0 to 1). @default 1 when debug=true, otherwise 0.1 */
+  /** Line opacity (0 to 1). @default 1 when debug=true, otherwise 0.25 */
   opacity?: number;
 }
 

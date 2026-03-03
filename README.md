@@ -1,7 +1,6 @@
 # @ii_elif_ii/react-node-tree
 
-Animated React node-tree component with configurable layouts and SVG connection lines.
-Built primarily for my personal use.
+Animated React tree renderer with configurable layout and SVG connection lines.
 
 ## Install
 
@@ -9,12 +8,12 @@ Built primarily for my personal use.
 npm install @ii_elif_ii/react-node-tree
 ```
 
-Peer dependencies (install in consuming app if needed):
+Peer dependencies:
 
 - `react`
 - `react-dom`
 
-## Usage
+## Quick Start
 
 ```tsx
 import * as React from "react";
@@ -39,26 +38,24 @@ export function Demo() {
   return (
     <NodeTree
       nodeTree={tree}
-      debug={false}
-      className={{ frame: "my-node-frame" }}
       layout={{ direction: "down", root: "stack", gap: 64 }}
       connection={{ color: "rgba(255,255,255)", width: 1, opacity: 0.15 }}
       animation={{ durationMs: 2000 }}
+      className={{ frame: "my-node-frame" }}
       nodeFrame={{ style: { borderRadius: 12 } }}
     />
   );
 }
 ```
 
+## Terminology
+
+- `NodeTree`: the React component that renders the full tree.
+- `TreeNode`: the node data model used to build your tree.
+
 ## API
 
-### `NodeTree`
-
-Main React component that renders the tree and animated SVG connections.
-
-### `TreeNode`
-
-Node model for `nodeTree`.
+### `TreeNode<TData = unknown>`
 
 ```ts
 type TreeNode<TData = unknown> = {
@@ -72,43 +69,58 @@ type TreeNode<TData = unknown> = {
 };
 ```
 
-### `TreeNodeRenderContext`
-
-Render callback context:
+### `TreeNodeRenderContext<TData = unknown>`
 
 - `node`: current `TreeNode`
-- `index`: sibling index
+- `index`: index among siblings
 - `depth`: depth from root (`0` for root)
-- `parentId`: parent node id (undefined for root)
+- `parentId`: parent id (`undefined` for root nodes)
 - `path`: ancestor path ending with current node id
-- `isLeaf`: whether node has no children
-- `childCount`: direct children count
-- `isNodeAnimationDone`: whether node enter animation has finished
+- `isLeaf`: whether the node has no children
+- `childCount`: number of direct children
+- `isNodeAnimationDone`: whether this node's enter animation finished
 
 ### `NodeTreeProps`
 
-Props for `NodeTree`:
-
 - `nodeTree: TreeNode[]` root nodes to render
 - `className?: NodeTreeClassNameOptions` slot classes (`root`, `canvas`, `renderer`, `frame`, `connections`)
-- `layout?: NodeTreeLayoutOptions` layout config
-  - `align?: "center" | "start" | "end" | { x, y }`
-  - `direction?: "down" | "right"`
-  - `root?: "stack" | "row"`
-  - `gap?: number`
-  - `padding?: number`
-  - `containerPadding?: number`
+- `layout?: NodeTreeLayoutOptions`
 - `connection?: NodeTreeConnectionOptions`
-  - `color?: string`
-  - `width?: number`
-  - `opacity?: number`
 - `animation?: NodeTreeAnimationOptions`
-  - `durationMs?: number`
 - `nodeFrame?: NodeTreeFrameOptions`
-  - `style?: React.CSSProperties`
 - `debug?: boolean`
+- all standard `div` attributes except plain `className` (this package uses slot-based `className`)
 
-### Exported Types
+### `NodeTreeLayoutOptions`
+
+- `align?: "center" | "start" | "end" | { x, y }`
+- `direction?: "down" | "right"`
+- `root?: "stack" | "row"`
+- `gap?: number`
+- `padding?: number`
+- `containerPadding?: number`
+
+### `NodeTreeConnectionOptions`
+
+- `color?: string`
+- `width?: number`
+- `opacity?: number`
+
+### `NodeTreeAnimationOptions`
+
+- `durationMs?: number`
+
+### `NodeTreeFrameOptions`
+
+- `style?: React.CSSProperties`
+
+## Exports
+
+### Component
+
+- `NodeTree`
+
+### Types
 
 - `TreeNode`
 - `TreeNodeChildren`
